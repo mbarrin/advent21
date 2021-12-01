@@ -1,6 +1,4 @@
-def part_one
-  lines = File.readlines("input.txt").map(&:to_i)
-
+def part_one(lines)
   increase, previous = 0, 0
 
   lines.each_with_index do |line, i|
@@ -12,9 +10,7 @@ def part_one
   puts "part 1: #{increase}"
 end
 
-def part_two
-  lines = File.readlines("input.txt").map(&:to_i)
-
+def part_two(lines)
   increase, previous = 0, 0
 
   lines.each_with_index do |line, i|
@@ -30,5 +26,11 @@ def part_two
   puts "part 2: #{increase}"
 end
 
-part_one
-part_two
+def main
+  lines = File.readlines("input.txt").map(&:to_i)
+
+  part_one(lines)
+  part_two(lines)
+end
+
+main
