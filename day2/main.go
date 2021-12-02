@@ -13,19 +13,13 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 
-	commands := []string{}
+	x, y, aim := 0, 0, 0
 
 	for scanner.Scan() {
-		line := scanner.Text()
-		commands = append(commands, line)
-	}
+		var direction string
+		var count int
 
-	x, y, aim := 0, 0, 0
-	var direction string
-	var count int
-
-	for _, line := range commands {
-		fmt.Sscanf(line, "%s %d", &direction, &count)
+		fmt.Sscanf(scanner.Text(), "%s %d", &direction, &count)
 
 		switch direction {
 		case "up":
