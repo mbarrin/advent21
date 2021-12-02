@@ -23,12 +23,12 @@ func main() {
 
 		switch direction {
 		case "up":
-			aim = aim - count
+			aim -= count
 		case "down":
-			aim = aim + count
+			aim += count
 		case "forward":
-			x = x + count
-			y = y + (aim * count)
+			x += count
+			y += aim * count
 		}
 	}
 
