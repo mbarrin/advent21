@@ -4,8 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
-	"strings"
 )
 
 func main() {
@@ -23,11 +21,11 @@ func main() {
 	}
 
 	x, y, aim := 0, 0, 0
-	for _, line := range commands {
-		command := strings.Split(line, " ")
+	var direction string
+	var count int
 
-		direction := command[0]
-		count, _ := strconv.Atoi(command[1])
+	for _, line := range commands {
+		fmt.Sscanf(line, "%s %d", &direction, &count)
 
 		switch direction {
 		case "up":
