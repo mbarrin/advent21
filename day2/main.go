@@ -31,25 +31,6 @@ func main() {
 
 		switch direction {
 		case "up":
-			y = y - count
-		case "down":
-			y = y + count
-		case "forward":
-			x = x + count
-		}
-	}
-
-	fmt.Printf("part 1: %d\n", x*y)
-
-	x, y, aim = 0, 0, 0
-	for _, line := range commands {
-		command := strings.Split(line, " ")
-
-		direction := command[0]
-		count, _ := strconv.Atoi(command[1])
-
-		switch direction {
-		case "up":
 			aim = aim - count
 		case "down":
 			aim = aim + count
@@ -59,5 +40,6 @@ func main() {
 		}
 	}
 
+	fmt.Printf("part 1: %d\n", x*aim)
 	fmt.Printf("part 2: %d\n", x*y)
 }
