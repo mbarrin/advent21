@@ -56,7 +56,6 @@ func (b *Board) Win(row bool) bool {
 			if row {
 				win = win && b.marked[i][j]
 			} else {
-
 				win = win && b.marked[j][i]
 			}
 		}
@@ -65,6 +64,16 @@ func (b *Board) Win(row bool) bool {
 		}
 	}
 	return false
+}
+
+func newBoard() Board {
+	return Board{marked: [][]bool{
+		make([]bool, 5),
+		make([]bool, 5),
+		make([]bool, 5),
+		make([]bool, 5),
+		make([]bool, 5),
+	}}
 }
 
 func main() {
@@ -85,14 +94,7 @@ func main() {
 	}
 
 	for i := 2; i < len(input); i += 6 {
-		board := Board{marked: [][]bool{
-			{false, false, false, false, false},
-			{false, false, false, false, false},
-			{false, false, false, false, false},
-			{false, false, false, false, false},
-			{false, false, false, false, false},
-		}}
-
+		board := newBoard()
 		for j := i; j < i+5; j++ {
 			line := []int64{}
 			for _, num := range strings.Fields(input[j]) {
