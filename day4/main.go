@@ -20,10 +20,6 @@ type Win struct {
 
 var instructions []int64
 
-func removeIndex(slice []Board, index int) []Board {
-	return append(slice[:index], slice[index+1:]...)
-}
-
 func (b *Board) score() int64 {
 	var score int64
 
