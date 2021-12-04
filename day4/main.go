@@ -13,7 +13,16 @@ type Board struct {
 	marked [][]bool
 }
 
+type Win struct {
+	board  Board
+	number int64
+}
+
 var instructions []int64
+
+func removeIndex(slice []Board, index int) []Board {
+	return append(slice[:index], slice[index+1:]...)
+}
 
 func (b *Board) score() int64 {
 	var score int64
@@ -107,14 +116,19 @@ func main() {
 		boards = append(boards, board)
 	}
 
-out:
+	wins := []Win{}
+
 	for _, number := range instructions {
 		for _, board := range boards {
+			if board.won() {
+				continue
+			}
 			board.contains(number)
 			if board.won() {
-				fmt.Printf("part 1: %d\n", board.score()*number)
-				break out
+				wins = append(wins, Win{board: board, number: number})
 			}
 		}
 	}
+	fmt.Printf("part 1: %d\n", wins[0].board.score()*wins[0].number)
+	fmt.Printf("part 2: %d\n", wins[len(wins)-1].board.score()*wins[len(wins)-1].number)
 }
