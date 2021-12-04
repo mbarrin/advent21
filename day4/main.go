@@ -45,28 +45,20 @@ func (b *Board) contains(num int64) bool {
 	return false
 }
 
-func (b *Board) won() bool {
-	return b.colWin() || b.rowWin()
+func (b *Board) boardWin() bool {
+	return b.Win(true) || b.Win(false)
 }
 
-func (b *Board) rowWin() bool {
-	for _, col := range b.marked {
-		win := true
-		for _, marked := range col {
-			win = win && marked
-		}
-		if win {
-			return true
-		}
-	}
-	return false
-}
-
-func (b *Board) colWin() bool {
+func (b *Board) Win(row bool) bool {
 	for i := 0; i < len(b.marked); i++ {
 		win := true
 		for j := 0; j < len(b.marked); j++ {
-			win = win && b.marked[j][i]
+			if row {
+				win = win && b.marked[i][j]
+			} else {
+
+				win = win && b.marked[j][i]
+			}
 		}
 		if win {
 			return true
@@ -116,11 +108,11 @@ func main() {
 
 	for _, number := range instructions {
 		for _, board := range boards {
-			if board.won() {
+			if board.boardWin() {
 				continue
 			}
 			board.contains(number)
-			if board.won() {
+			if board.boardWin() {
 				wins = append(wins, Win{board: board, number: number})
 			}
 		}

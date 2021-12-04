@@ -20,12 +20,12 @@ func TestRowWin(t *testing.T) {
 	board := Board{marked: input}
 	badBoard := Board{marked: badInput}
 
-	if expectedOutput != board.rowWin() {
+	if expectedOutput != board.Win(true) {
 		t.Fail()
 		t.Log("FAIL")
 	}
 
-	if badBoard.rowWin() != false {
+	if badBoard.Win(true) != false {
 		t.Fail()
 		t.Log("FAIL")
 	}
@@ -49,12 +49,12 @@ func TestColWin(t *testing.T) {
 
 	expectedOutput := true
 
-	if expectedOutput != board.colWin() {
+	if expectedOutput != board.Win(false) {
 		t.Fail()
 		t.Log("FAIL")
 	}
 
-	if badBoard.colWin() != false {
+	if badBoard.Win(false) != false {
 		t.Fail()
 		t.Log("FAIL")
 	}
