@@ -84,10 +84,10 @@ func main() {
 			oxygen = keepLines(oxygen, x, 0)
 		}
 
-		if co2count[1] < co2count[0] {
-			co2 = keepLines(co2, x, 1)
-		} else {
+		if co2count[1] >= co2count[0] {
 			co2 = keepLines(co2, x, 0)
+		} else {
+			co2 = keepLines(co2, x, 1)
 		}
 	}
 
