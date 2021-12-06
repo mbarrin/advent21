@@ -37,20 +37,15 @@ func main() {
 		}
 
 		tmpFish := make(map[int64]int)
-		addNew := 0
 		for k, v := range fish {
 			if k == 0 {
 				tmpFish[6] += v
-				addNew = v
+				tmpFish[8] += v
 			} else {
 				tmpFish[k-1] += v
 			}
 		}
 		fish = tmpFish
-
-		if addNew > 0 {
-			fish[8] += addNew
-		}
 	}
 	fmt.Printf("part 2: %d\n", totalFish(fish))
 }
