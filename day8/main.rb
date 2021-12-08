@@ -24,34 +24,23 @@ input.each do |line|
         end
     end
 
-    while unknown[6].size != 0
-        unknown[6].each_with_index do |foo,i|
-            if (foo - numbers[7]).size == 4 
-                numbers[6] = unknown[6].delete_at(i)
-            end
-            if (foo - numbers[4]).size == 2
-                numbers[9] = unknown[6].delete_at(i)
-            end
-        end
-
-        if unknown[6].size == 1 
-            numbers[0] = unknown[6].delete_at(0)
+    unknown[6].each do |code|
+        if (code - numbers[7]).size == 4 
+            numbers[6] = code
+        elsif (code - numbers[4]).size == 2
+            numbers[9] = code
+        else 
+            numbers[0] = code
         end
     end
 
-    while unknown[5].size !=0
-        unknown[5].each_with_index do |foo,i|
-            if (foo - numbers[7]).size == 2
-                numbers[3] = unknown[5].delete_at(i)
-            end
-
-            if (numbers[6] - foo).size == 1 
-                numbers[5] = unknown[5].delete_at(i)
-            end
-
-            if unknown[5].size == 1 
-                numbers[2] = unknown[5].delete_at(0)
-            end
+    unknown[5].each do |code|
+        if (code - numbers[7]).size == 2
+            numbers[3] = code
+        elsif (numbers[6] - code).size == 1 
+            numbers[5] = code
+        else 
+            numbers[2] = code
         end
     end
 
