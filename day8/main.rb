@@ -1,8 +1,6 @@
 input = File.readlines("input.txt")
 
-grand_total = 0
-
-input.each do |line| 
+grand_total = input.sum do |line| 
     pre, post = line.split("|").map(&:split)
 
     numbers = {}
@@ -46,15 +44,12 @@ input.each do |line|
 
     inverted = numbers.invert
 
-    total = 0
-    multi = 1000
+    multi = 10000
 
-    post.each do |bar|
-        total += inverted[bar.chars.sort] * multi
+    post.sum do |bar|
         multi /= 10
+        inverted[bar.chars.sort] * multi
     end
-
-    grand_total += total
 end
 
 puts "part 2: #{grand_total}"
