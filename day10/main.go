@@ -35,8 +35,8 @@ func main() {
 		"}": 3,
 		">": 4,
 	}
-	badChars := []string{}
-	scores := []int{}
+	badScore := 0
+	incompleteScores := []int{}
 	for scanner.Scan() {
 		line := scanner.Text()
 		badLine := false
@@ -47,7 +47,7 @@ func main() {
 				charList = append(charList, char)
 			} else {
 				if charList[len(charList)-1] != charMap[char] {
-					badChars = append(badChars, char)
+					badScore += charScore[char]
 					badLine = true
 					break
 				} else {
@@ -61,16 +61,12 @@ func main() {
 				char := reverseCharMap[charList[i]]
 				total = (total * 5) + secondCharScore[char]
 			}
-			scores = append(scores, total)
+			incompleteScores = append(incompleteScores, total)
 		}
 	}
 
-	total := 0
-	for _, char := range badChars {
-		total += charScore[char]
-	}
-	fmt.Printf("part 1: %d\n", total)
+	fmt.Printf("part 1: %d\n", badScore)
 
-	sort.Ints(scores)
-	fmt.Printf("part 2: %d\n", scores[len(scores)/2])
+	sort.Ints(incompleteScores)
+	fmt.Printf("part 2: %d\n", incompleteScores[len(incompleteScores)/2])
 }
