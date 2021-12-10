@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -16,15 +17,29 @@ func main() {
 		">": "<",
 		")": "(",
 	}
+	reverseCharMap := map[string]string{
+		"{": "}",
+		"[": "]",
+		"<": ">",
+		"(": ")",
+	}
 	charScore := map[string]int{
 		")": 3,
 		"]": 57,
 		"}": 1197,
 		">": 25137,
 	}
+	secondCharScore := map[string]int{
+		")": 1,
+		"]": 2,
+		"}": 3,
+		">": 4,
+	}
 	badChars := []string{}
+	incompleteLines := [][]string{}
 	for scanner.Scan() {
 		line := scanner.Text()
+		badLine := false
 		charList := []string{}
 		chars := strings.Split(line, "")
 		for _, char := range chars {
@@ -33,16 +48,34 @@ func main() {
 			} else {
 				if charList[len(charList)-1] != charMap[char] {
 					badChars = append(badChars, char)
+					badLine = true
 					break
 				} else {
 					charList = charList[:len(charList)-1]
 				}
 			}
 		}
+		if !badLine {
+			incompleteLines = append(incompleteLines, charList)
+		}
 	}
+
 	total := 0
 	for _, char := range badChars {
 		total += charScore[char]
 	}
-	fmt.Println(total)
+	fmt.Printf("part 1: %d\n", total)
+
+	scores := []int{}
+	for _, x := range incompleteLines {
+		total := 0
+		for i := len(x) - 1; i >= 0; i-- {
+			char := reverseCharMap[x[i]]
+			total = (total * 5) + secondCharScore[char]
+		}
+		scores = append(scores, total)
+	}
+
+	sort.Ints(scores)
+	fmt.Printf("part 2: %d\n", scores[len(scores)/2])
 }
