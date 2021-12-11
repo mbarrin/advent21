@@ -22,20 +22,11 @@ func flash(grid [][]int64, flashed [][]bool, y, x, count int) ([][]int64, [][]bo
 	flashed[y][x] = true
 	count += 1
 
-	//fmt.Printf("y: %d, x: %d\n", y, x)
-	//for y := range grid {
-	//	for x := range grid[y] {
-	//		fmt.Printf("%02d ", grid[y][x])
-	//	}
-	//	fmt.Println()
-	//}
-	//fmt.Println()
-
 	if y > 0 && x > 0 {
 		grid, flashed, count = flash(grid, flashed, y-1, x-1, count)
 	}
 
-	if y > 0 && x >= 0 {
+	if y > 0 {
 		grid, flashed, count = flash(grid, flashed, y-1, x, count)
 	}
 
@@ -43,7 +34,7 @@ func flash(grid [][]int64, flashed [][]bool, y, x, count int) ([][]int64, [][]bo
 		grid, flashed, count = flash(grid, flashed, y+1, x+1, count)
 	}
 
-	if y < len(grid)-1 && x <= len(grid[y])-1 {
+	if y < len(grid)-1 {
 		grid, flashed, count = flash(grid, flashed, y+1, x, count)
 	}
 
@@ -51,7 +42,7 @@ func flash(grid [][]int64, flashed [][]bool, y, x, count int) ([][]int64, [][]bo
 		grid, flashed, count = flash(grid, flashed, y-1, x+1, count)
 	}
 
-	if y >= 0 && x < len(grid[y])-1 {
+	if x < len(grid[y])-1 {
 		grid, flashed, count = flash(grid, flashed, y, x+1, count)
 	}
 
@@ -59,7 +50,7 @@ func flash(grid [][]int64, flashed [][]bool, y, x, count int) ([][]int64, [][]bo
 		grid, flashed, count = flash(grid, flashed, y+1, x-1, count)
 	}
 
-	if y <= len(grid)-1 && x > 0 {
+	if x > 0 {
 		grid, flashed, count = flash(grid, flashed, y, x-1, count)
 	}
 
@@ -86,7 +77,8 @@ func main() {
 	}
 
 	grandTotal := 0
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1000; i++ {
+		allFlashed := true
 		loopTotal := 0
 		flashed := make([][]bool, 10)
 		for i := range flashed {
@@ -99,8 +91,21 @@ func main() {
 			}
 		}
 
-		grandTotal += loopTotal
+		if i < 100 {
+			grandTotal += loopTotal
+		}
+
+		for y := range flashed {
+			for x := range flashed[y] {
+				allFlashed = allFlashed && flashed[y][x]
+			}
+		}
+
+		if allFlashed {
+			fmt.Printf("part 2: %d\n", i+1)
+			break
+		}
 
 	}
-	fmt.Println(grandTotal)
+	fmt.Printf("part 1: %d\n", grandTotal)
 }
