@@ -14,7 +14,6 @@ func main() {
 
 	instructions := []string{}
 	dots := []string{}
-	dotMap := map[string]int{}
 	var foldInfo string
 
 	for scanner.Scan() {
@@ -29,31 +28,59 @@ func main() {
 			dots = append(dots, line)
 		}
 	}
+	var y, x int64
 
-	fmt.Sscanf(instructions[0], "fold along %s", &foldInfo)
-	foo := strings.Split(foldInfo, "=")
+	for i := range instructions {
+		newDots := []string{}
+		dotMap := map[string]int{}
 
-	foldAxis := foo[0]
-	foldLine, _ := strconv.ParseInt(foo[1], 10, 0)
+		fmt.Sscanf(instructions[i], "fold along %s", &foldInfo)
+		foldInfo := strings.Split(foldInfo, "=")
+
+		foldAxis := foldInfo[0]
+		foldLine, _ := strconv.ParseInt(foldInfo[1], 10, 0)
+
+		for i := range dots {
+			fmt.Sscanf(dots[i], "%d,%d", &x, &y)
+			if foldAxis == "y" {
+				if y > foldLine {
+					y = y - ((y - foldLine) * 2)
+				}
+			} else {
+				if x > foldLine {
+					x = x - ((x - foldLine) * 2)
+				}
+			}
+			coords := fmt.Sprintf("%d,%d", x, y)
+			dotMap[coords]++
+			newDots = append(newDots, coords)
+		}
+
+		total := 0
+		for range dotMap {
+			total++
+		}
+		if i == 0 {
+			fmt.Printf("part 1: %d\n", total)
+		}
+		dots = newDots
+	}
+
+	letters := [6][39]string{}
+
+	for i := range letters {
+		for j := range letters[i] {
+			letters[i][j] = " "
+		}
+	}
 
 	for i := range dots {
-		var y, x int64
 		fmt.Sscanf(dots[i], "%d,%d", &x, &y)
-		if foldAxis == "y" {
-			if y > foldLine {
-				y = y - ((y - foldLine) * 2)
-			}
-		} else {
-			if x > foldLine {
-				x = x - ((x - foldLine) * 2)
-			}
-		}
-		dotMap[fmt.Sprintf("%d,%d", y, x)]++
+		letters[y][x] = "*"
 	}
 
-	total := 0
-	for range dotMap {
-		total++
+	fmt.Println("part 2: ")
+	for i := range letters {
+		fmt.Println(letters[i])
 	}
-	fmt.Printf("part 1: %d\n", total)
 }
