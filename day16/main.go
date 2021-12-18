@@ -31,7 +31,8 @@ func parsePackets(packets []string, length int64) int64 {
 
 	//fmt.Println(pv)
 
-	if pt == 4 {
+	switch pt {
+	case 4:
 		moreBits := true
 
 		for moreBits {
@@ -43,13 +44,12 @@ func parsePackets(packets []string, length int64) int64 {
 				moreBits = false
 			}
 		}
-	} else {
+	default:
 		id := packets[0:1]
 		packets = packets[1:]
 
 		if toInt(id) == 0 {
 			packets = packets[15:]
-
 		} else {
 			packets = packets[11:]
 		}
